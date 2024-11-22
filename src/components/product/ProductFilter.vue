@@ -7,6 +7,8 @@
       :options="categories"
       option-value="id"
       option-label="description"
+      @update:model-value="onChange"
+    />
     />
   </div>
   <div class="price-filter"></div>
@@ -17,6 +19,7 @@
 <script>
 export default {
   name: "ProductFilter",
+  emits: ["categoriaCambiada"],
   data() {
     return {
       minimo: 0,
@@ -29,6 +32,11 @@ export default {
     this.cargarCategorias();
   },
   methods: {
+    onChange(value) {
+      console.log("El valor seleccionado de la categoría es:" + value.id);
+      this.$emit("categoriaCambiada", value.id);
+    },
+
     cargarCategorias() {
       let endpointURL = "/api/category";
       this.$api
